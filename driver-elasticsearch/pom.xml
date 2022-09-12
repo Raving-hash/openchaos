@@ -56,6 +56,11 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${es-rest-client.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -65,6 +70,7 @@
         <jackson-dataformat-yaml.version>2.10.2</jackson-dataformat-yaml.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <mockito.version>4.6.1</mockito.version>
+        <es-rest-client.version>6.5.4</es-rest-client.version>
     </properties>
 
 </project>
