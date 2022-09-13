@@ -32,6 +32,20 @@
             <artifactId>driver-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson-dataformat-yaml.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
@@ -45,7 +59,7 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-client</artifactId>
-            <version>${elasticsearch-version}</version>
+            <version>${es-rest-client.version}</version>
         </dependency>
     </dependencies>
 
@@ -56,7 +70,7 @@
         <jackson-dataformat-yaml.version>2.10.2</jackson-dataformat-yaml.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <mockito.version>4.6.1</mockito.version>
-        <elasticsearch-version>8.2.2</elasticsearch-version>
+        <es-rest-client.version>6.5.4</es-rest-client.version>
     </properties>
 
 </project>

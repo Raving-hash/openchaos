@@ -1,35 +1,53 @@
 package io.openmessaging.driver.elasticsearch;
 
-import io.openchaos.common.InvokeResult;
-import io.openchaos.driver.kv.KVClient;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class ElasticSearchClient implements KVClient {
+public class ElasticSearchClient {
+    private RestClient client;
 
-    @Override
-    public void start() {
-
+    public ElasticSearchClient(RestClient _client) {
+        client = _client;
     }
 
-    @Override
-    public void close() {
+    public List<String> sendRequestAsyc(Request request) {
+        List<String> res = new ArrayList<>();
+        try {
+            client.performRequestAsync(request, new ResponseListener() {
+                @Override
+                public void onSuccess(Response response) {
+                    try {
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                                response.getEntity().getContent()));
+                        String str = "";
+                        while ((str = bufferedReader.readLine()) != null) {
+                            res.add(str);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
+                @Override
+                public void onFailure(Exception e) {
+                    try {
+                        throw e;
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Send Request faild!");
+        }
+        return res;
     }
 
-    @Override
-    public InvokeResult put(Optional<String> key, String value) {
-        return null;
-    }
-
-    @Override
-    public List<String> getAll(Optional<String> key, int putInvokeCount) {
-        return null;
-    }
-
-    @Override
-    public List<String> getAll(Optional<String> key) {
-        return null;
-    }
 }
