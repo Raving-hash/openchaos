@@ -1,4 +1,4 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openmessaging.driver.elasticsearch.core;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.*;

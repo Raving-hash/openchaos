@@ -2,6 +2,7 @@ package io.openmessaging.driver.elasticsearch;
 
 import io.openchaos.common.InvokeResult;
 import io.openchaos.driver.kv.KVClient;
+import io.openmessaging.driver.elasticsearch.core.ElasticSearchClient;
 import org.elasticsearch.client.RestClient;
 
 import java.util.List;
