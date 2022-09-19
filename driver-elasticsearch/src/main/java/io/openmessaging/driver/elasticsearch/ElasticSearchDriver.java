@@ -3,6 +3,7 @@ package io.openmessaging.driver.elasticsearch;
 import io.openchaos.driver.ChaosNode;
 import io.openchaos.driver.kv.KVClient;
 import io.openchaos.driver.kv.KVDriver;
+import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
 
 import java.io.File;
 import java.io.IOException;

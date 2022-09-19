@@ -70,7 +70,7 @@
         <jackson-dataformat-yaml.version>2.10.2</jackson-dataformat-yaml.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <mockito.version>4.6.1</mockito.version>
-        <es-rest-client.version>6.5.4</es-rest-client.version>
+        <es-rest-client.version>8.0.0</es-rest-client.version>
     </properties>
 
 </project>
