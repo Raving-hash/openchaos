@@ -26,7 +26,7 @@ nodes:
   - n3
 
 # ElasticSearch configuration
-ElasticSearchVersion: 8.10
+elasticsearchVersion: 8.10
 installDir: es-chaos-test # you could set existent location for ElasticSearch
 
 # ElasticSearch Client configuration

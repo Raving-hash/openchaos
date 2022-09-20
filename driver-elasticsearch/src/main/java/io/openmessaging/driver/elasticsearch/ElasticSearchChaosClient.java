@@ -1,6 +1,7 @@
 package io.openmessaging.driver.elasticsearch;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.openchaos.common.InvokeResult;
 import io.openchaos.driver.kv.KVClient;
@@ -26,6 +27,7 @@ public class ElasticSearchChaosClient implements KVClient {
     private RestClient esClient;
     private final String endpoint = "/openchaos";
     private final String type = "/it";
+    private ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     public ElasticSearchChaosClient(RestClient client) {
         esClient = client;
@@ -96,13 +98,11 @@ public class ElasticSearchChaosClient implements KVClient {
         Document document = new Document();
         document.setKey(key);
         document.setValue(value);
-        ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(document);
     }
 
     private Document deserialize(HttpEntity _entity) throws IOException {
         String entity = EntityUtils.toString(_entity);
-        ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(entity, Document.class);
     }
 }
