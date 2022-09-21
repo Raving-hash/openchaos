@@ -56,6 +56,7 @@ public class ElasticSearchDriver implements KVDriver {
         this.host = elasticsearchClientConfig.host;
         this.username = elasticsearchClientConfig.username;
         this.password = elasticsearchClientConfig.password;
+        ElasticSearchFactory.initial(this.nodes, username, password);
     }
 
     @Override
@@ -88,5 +89,21 @@ public class ElasticSearchDriver implements KVDriver {
             log.error("Create ES client failed!");
         }
         return client;
+    }
+
+    public ElasticSearchConfig getElasticsearchConfig() {
+        return elasticsearchConfig;
+    }
+
+    public void setElasticsearchConfig(ElasticSearchConfig elasticsearchConfig) {
+        this.elasticsearchConfig = elasticsearchConfig;
+    }
+
+    public ElasticSearchClientConfig getElasticsearchClientConfig() {
+        return elasticsearchClientConfig;
+    }
+
+    public void setElasticsearchClientConfig(ElasticSearchClientConfig elasticsearchClientConfig) {
+        this.elasticsearchClientConfig = elasticsearchClientConfig;
     }
 }

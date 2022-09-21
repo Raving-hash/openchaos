@@ -1,36 +1,41 @@
 package io.openmessaging.driver.elasticsearch;
 
-import org.junit.Test;
+import io.openmessaging.driver.elasticsearch.config.ElasticSearchConfig;
+import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
+import junit.framework.TestCase;
+import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ElasticSearchDriverTest {
-
-    @Test
-    public void getMetaNode() {
+public class ElasticSearchDriverTest extends TestCase {
+    static ElasticSearchDriver driver = new ElasticSearchDriver();
+    static File file = Mockito.mock(File.class);
+    static List<String> nodes = new ArrayList<>();
+    static {
+        ElasticSearchFactory.initial(new ArrayList<String>() {{
+            add("localhost");
+        }}, "elastic", "elastic");
     }
 
-    @Test
-    public void getMetaName() {
+
+    public void testShutdown() {
+        driver.shutdown();
     }
 
-    @Test
-    public void initialize() {
+    public void testCreateChaosNode() {
+        ElasticSearchConfig config = Mockito.mock(ElasticSearchConfig.class);
+        driver.setElasticsearchConfig(config);
+        assertNotNull(driver.createChaosNode("", nodes));
     }
 
-    @Test
-    public void shutdown() {
+    public void testGetStateName() {
+        assertNotNull(driver.getStateName());
     }
 
-    @Test
-    public void createChaosNode() {
-    }
-
-    @Test
-    public void getStateName() {
-    }
-
-    @Test
-    public void createClient() {
+    public void testCreateClient() {
+        assertNotNull(driver.createClient());
     }
 }

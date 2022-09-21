@@ -45,9 +45,7 @@ public class ElasticSearchChaosClient implements KVClient {
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 
     @Override
     public InvokeResult put(Optional<String> key, String value) {
@@ -104,5 +102,21 @@ public class ElasticSearchChaosClient implements KVClient {
     private Document deserialize(HttpEntity _entity) throws IOException {
         String entity = EntityUtils.toString(_entity);
         return objectMapper.readValue(entity, Document.class);
+    }
+
+    public RestClient getEsClient() {
+        return esClient;
+    }
+
+    public void setEsClient(RestClient esClient) {
+        this.esClient = esClient;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public String getType() {
+        return type;
     }
 }
