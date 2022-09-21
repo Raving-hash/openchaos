@@ -5,14 +5,11 @@ import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
 import junit.framework.TestCase;
 import org.mockito.Mockito;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ElasticSearchDriverTest extends TestCase {
     static ElasticSearchDriver driver = new ElasticSearchDriver();
-    static File file = Mockito.mock(File.class);
     static List<String> nodes = new ArrayList<>();
     static {
         ElasticSearchFactory.initial(new ArrayList<String>() {{
