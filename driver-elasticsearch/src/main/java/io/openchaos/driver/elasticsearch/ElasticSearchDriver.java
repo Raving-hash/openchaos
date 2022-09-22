@@ -1,14 +1,15 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openchaos.driver.elasticsearch;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import io.openchaos.driver.ChaosNode;
+import io.openchaos.driver.elasticsearch.config.ElasticSearchClientConfig;
+import io.openchaos.driver.elasticsearch.config.ElasticSearchConfig;
+import io.openchaos.driver.elasticsearch.core.ElasticSearchFactory;
 import io.openchaos.driver.kv.KVClient;
 import io.openchaos.driver.kv.KVDriver;
-import io.openmessaging.driver.elasticsearch.config.ElasticSearchClientConfig;
-import io.openmessaging.driver.elasticsearch.config.ElasticSearchConfig;
-import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
+import org.elasticsearch.client.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ public class ElasticSearchDriver implements KVDriver {
     private String host;
     private String username;
     private String password;
+    private final String endpoint = "/openchaos";
 
     @Override
     public String getMetaNode() {
@@ -56,7 +58,17 @@ public class ElasticSearchDriver implements KVDriver {
         this.host = elasticsearchClientConfig.host;
         this.username = elasticsearchClientConfig.username;
         this.password = elasticsearchClientConfig.password;
-        ElasticSearchFactory.initial(this.nodes, username, password);
+        this.port = elasticsearchClientConfig.port;
+        ElasticSearchFactory.initial(this.nodes, username, password, elasticsearchConfig.isSsl, port);
+        try {
+            Request deleteRequest = new Request("DELETE", endpoint);
+            ElasticSearchFactory.getClient().performRequest(deleteRequest);
+            Request request = new Request("PUT", endpoint);
+            ElasticSearchFactory.getClient().performRequest(request);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override

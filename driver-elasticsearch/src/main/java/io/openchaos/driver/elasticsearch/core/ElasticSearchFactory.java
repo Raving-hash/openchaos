@@ -1,21 +1,18 @@
-package io.openmessaging.driver.elasticsearch.core;
+package io.openchaos.driver.elasticsearch.core;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 import java.util.List;
 
 public class ElasticSearchFactory {
@@ -23,11 +20,14 @@ public class ElasticSearchFactory {
     private static String username;
     private static String password;
     private static List<String> nodes;
-
-    public static void initial(List<String> nodes, String username, String password) {
+    private static boolean isSsl;
+    private static int port;
+    public static void initial(List<String> nodes, String username, String password, boolean isSsl, int port) {
         ElasticSearchFactory.nodes = nodes;
         ElasticSearchFactory.username = username;
         ElasticSearchFactory.password = password;
+        ElasticSearchFactory.isSsl = isSsl;
+        ElasticSearchFactory.port = port;
     }
 
     public static RestClient getClient() {
@@ -40,16 +40,23 @@ public class ElasticSearchFactory {
                             .setCompressionEnabled(true);
                     final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
                     credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-                    try {
-                        final SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build();
+                    if (!isSsl) {
                         clientBuilder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
-                                .setSSLContext(sslContext)
-                                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                                 .setDefaultCredentialsProvider(credentialsProvider));
-                    } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
-                        throw new RuntimeException(e);
+                    } else {
+                        try {
+                            //todo 无法理解KeyStore是什么东西
+                            KeyStore trustStore = KeyStore.getInstance("es");
+                            SSLContextBuilder sslContextBuilder = SSLContexts.custom()
+                                    .loadTrustMaterial(trustStore, null);
+                            final SSLContext sslContext = sslContextBuilder.build();
+                            clientBuilder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
+                                    .setDefaultCredentialsProvider(credentialsProvider)
+                                    .setSSLContext(sslContext));
+                        } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-
                     client = clientBuilder.build();
                 }
             }
@@ -58,9 +65,10 @@ public class ElasticSearchFactory {
     }
 
     private static HttpHost[] getHosts(List<String> _nodes) {
+        String scheme = isSsl ? "https" : "http";
         HttpHost[] hosts = new HttpHost[_nodes.size()];
         for (int i = 0; i < _nodes.size(); ++i) {
-            hosts[i] = new HttpHost(_nodes.get(i), 9200, "https");
+            hosts[i] = new HttpHost(_nodes.get(i), port, scheme);
         }
         return hosts;
     }

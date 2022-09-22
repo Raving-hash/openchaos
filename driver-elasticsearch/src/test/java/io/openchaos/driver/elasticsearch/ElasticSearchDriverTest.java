@@ -1,7 +1,7 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openchaos.driver.elasticsearch;
 
-import io.openmessaging.driver.elasticsearch.config.ElasticSearchConfig;
-import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
+import io.openchaos.driver.elasticsearch.config.ElasticSearchConfig;
+import io.openchaos.driver.elasticsearch.core.ElasticSearchFactory;
 import junit.framework.TestCase;
 import org.mockito.Mockito;
 
@@ -14,7 +14,7 @@ public class ElasticSearchDriverTest extends TestCase {
     static {
         ElasticSearchFactory.initial(new ArrayList<String>() {{
             add("localhost");
-        }}, "elastic", "elastic");
+        }}, "elastic", "elastic", false);
     }
 
 

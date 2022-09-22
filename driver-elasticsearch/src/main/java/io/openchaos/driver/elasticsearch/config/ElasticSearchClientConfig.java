@@ -1,4 +1,4 @@
-package io.openmessaging.driver.elasticsearch.config;
+package io.openchaos.driver.elasticsearch.config;
 
 public class ElasticSearchClientConfig {
     public String host;

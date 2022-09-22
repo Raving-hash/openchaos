@@ -1,8 +1,8 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openchaos.driver.elasticsearch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.openchaos.driver.ChaosState;
-import io.openmessaging.driver.elasticsearch.core.ElasticSearchFactory;
+import io.openchaos.driver.elasticsearch.core.ElasticSearchFactory;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;

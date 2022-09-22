@@ -1,12 +1,10 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openchaos.driver.elasticsearch;
 
 import io.openchaos.common.utils.KillProcessUtil;
-import io.openchaos.common.utils.NetUtil;
 import io.openchaos.common.utils.PauseProcessUtil;
 import io.openchaos.common.utils.SshUtil;
+import io.openchaos.driver.elasticsearch.config.ElasticSearchConfig;
 import io.openchaos.driver.kv.KVNode;
-import io.openmessaging.driver.elasticsearch.config.ElasticSearchClientConfig;
-import io.openmessaging.driver.elasticsearch.config.ElasticSearchConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

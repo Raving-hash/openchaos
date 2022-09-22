@@ -1,4 +1,4 @@
-package io.openmessaging.driver.elasticsearch.core;
+package io.openchaos.driver.elasticsearch.core;
 
 import junit.framework.TestCase;
 
@@ -9,7 +9,7 @@ public class ElasticSearchFactoryTest extends TestCase {
     public void testGetClient() {
         ElasticSearchFactory.initial(new ArrayList<String>() {{
             add("localhost");
-        }}, "elastic", "elastic");
+        }}, "elastic", "elastic", true);
         assertNotNull(ElasticSearchFactory.getClient());
     }
 }

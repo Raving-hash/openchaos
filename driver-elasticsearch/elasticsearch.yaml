@@ -21,13 +21,12 @@ endToEndLatencyCheck: false
 
 # Nodes for ElasticSearch-Server
 nodes:
-  - n1 # replace with ip or domain name, such as 192.168.0.2
-  - n2
-  - n3
+  - 192.144.239.212 # replace with ip or domain name, such as 192.168.0.2
 
 # ElasticSearch configuration
 elasticsearchVersion: 8.10
 installDir: es-chaos-test # you could set existent location for ElasticSearch
+isSsl: false
 
 # ElasticSearch Client configuration
 username: elastic

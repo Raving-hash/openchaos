@@ -1,15 +1,17 @@
-package io.openmessaging.driver.elasticsearch;
+package io.openchaos.driver.elasticsearch;
 
-import io.openmessaging.driver.elasticsearch.core.Document;
+import io.openchaos.driver.elasticsearch.core.Document;
+import io.openchaos.driver.elasticsearch.core.ElasticSearchFactory;
 import junit.framework.TestCase;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
 import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ElasticSearchChaosClientTest extends TestCase {
@@ -39,4 +41,5 @@ public class ElasticSearchChaosClientTest extends TestCase {
     public void testGetAll() {
         assertNotNull(esClient.getAll(Optional.empty(), 10));
     }
+
 }
