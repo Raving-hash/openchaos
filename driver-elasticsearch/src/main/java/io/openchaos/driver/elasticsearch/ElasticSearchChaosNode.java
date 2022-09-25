@@ -30,7 +30,7 @@ public class ElasticSearchChaosNode implements KVNode {
     }
     @Override
     public void setup() {
-
+        //todo 安装集群
     }
 
     @Override
